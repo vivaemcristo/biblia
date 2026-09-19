@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viva em Cristo · Bíblia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1F4FA; --surface:#FFFFFF; --ink:#14203A; --muted:#55627F; --line:#D9E1EF;
+  --gold:#8A6014; --gold-tint:rgba(138,96,20,.14); --accent:#1F3A6E;
+  --hero1:#101D3D; --hero2:#2A4A86; --hero-ink:#F8F2E2; --glow:rgba(230,190,104,.55);
+  --fs:22px; --tabs-h:64px;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A1226; --surface:#121E3B; --ink:#EAF0FB; --muted:#9BA9C8; --line:#22335C;
+    --gold:#E6BE68; --gold-tint:rgba(230,190,104,.16); --accent:#8FB0F0;
+    --hero1:#0C1733; --hero2:#1E3666; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A1226; --surface:#121E3B; --ink:#EAF0FB; --muted:#9BA9C8; --line:#22335C;
+  --gold:#E6BE68; --gold-tint:rgba(230,190,104,.16); --accent:#8FB0F0;
+  --hero1:#0C1733; --hero2:#1E3666; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#app{max-width:640px;margin:0 auto;padding:0 18px calc(var(--tabs-h) + 110px)}
+h1,h2{font-family:var(--serif);margin:0;line-height:1.15;font-weight:700}
+h2{font-size:24px;font-weight:600;margin:30px 0 12px}
+.muted{color:var(--muted)}
+.small{font-size:15px}
+
+.brand{display:flex;align-items:center;gap:10px;padding:18px 0 14px}
+.brand svg{color:var(--gold)}
+.brand span{font-family:var(--serif);font-weight:700;font-size:26px;letter-spacing:.2px}
+
+.hero{position:relative;border-radius:24px;padding:28px 22px 22px;color:var(--hero-ink);
+  background:radial-gradient(120% 70% at 50% -12%,var(--glow),transparent 58%),linear-gradient(165deg,var(--hero1),var(--hero2));
+  animation:rise .9s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero .kicker{margin:0 0 14px;font-size:15px;opacity:.85}
+.hero blockquote{margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(25px,6.6vw,32px);line-height:1.32;text-wrap:balance}
+.hero .ref{margin:16px 0 20px;font-weight:600;color:#E6BE68;font-size:16px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:10px}
+
+.btn{min-height:44px;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:16px}
+.btn.gold{background:#E6BE68;border-color:#E6BE68;color:#14203A}
+.btn.ghost{background:transparent;border-color:rgba(248,242,226,.45);color:var(--hero-ink)}
+.btn.wide{width:100%;margin-top:6px}
+
+.row-card{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;margin-top:14px;padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:var(--surface);text-align:left}
+.row-card .lbl{font-size:15px;color:var(--muted)}
+.row-card .big{font-family:var(--serif);font-size:27px;font-weight:700;color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600}
+
+.topbar{display:flex;align-items:center;gap:8px;padding:14px 0 6px}
+.topbar .grow{flex:1;min-width:0}
+.topbar h1{font-size:30px}
+.title-btn{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left}
+.icon-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:26px;line-height:1;display:grid;place-items:center;flex:none}
+.icon-btn.sm{font-size:16px;font-weight:700}
+
+.search{width:100%;margin:16px 0 12px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:17px}
+.search::placeholder{color:var(--muted)}
+.seg{display:grid;gap:4px;padding:4px;border-radius:14px;background:var(--line);margin-bottom:8px}
+.seg-b{min-height:42px;border:0;border-radius:10px;background:transparent;font-weight:600;font-size:15px}
+.seg-b.on{background:var(--surface);color:var(--gold)}
+.book{display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;padding:14px 4px;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;font-size:19px}
+.book .n{font-size:14px;color:var(--muted);flex:none}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.grid button{aspect-ratio:1;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:18px}
+
+.verses{margin-top:14px}
+.v{margin:0 0 2px;padding:6px 10px;border-radius:10px;border-left:3px solid transparent;font-family:var(--serif);font-weight:500;font-size:var(--fs);line-height:1.6;cursor:pointer}
+.v sup{font-family:var(--sans);font-size:.5em;font-weight:700;color:var(--gold);margin-right:.5em;vertical-align:super}
+.v.fav{border-left-color:var(--gold)}
+.v.sel{background:var(--gold-tint)}
+.v.hl{animation:flash 2.6s ease-out 1}
+@keyframes flash{0%,55%{background:var(--gold-tint)}100%{background:transparent}}
+.state{padding:26px 4px;color:var(--muted)}
+.pager{display:flex;gap:10px;margin-top:22px}
+.pager .btn{flex:1}
+.pager .btn:disabled{opacity:.4}
+
+.fav-item{margin-top:14px;padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
+.fav-item p{margin:0 0 6px;font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.5}
+.fav-item .r{font-weight:700;color:var(--gold);font-size:16px;margin-bottom:12px}
+.fav-item .actions{display:flex;gap:8px;flex-wrap:wrap}
+.fav-item .btn{min-height:40px;padding:6px 14px;font-size:15px}
+
+.panel{margin-top:14px;padding:18px;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
+.panel h2{margin:0 0 10px;font-size:22px}
+.panel input[type=range]{width:100%;accent-color:var(--gold)}
+.preview{font-family:var(--serif);font-weight:500;line-height:1.5;margin:10px 0 0}
+
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+#tabs .in{display:flex;max-width:640px;margin:0 auto}
+.tab{flex:1;height:var(--tabs-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:none;border:0;color:var(--muted);font-size:13px;font-weight:600}
+.tab.on{color:var(--gold)}
+#bar{position:fixed;left:50%;transform:translateX(-50%);z-index:30;width:min(600px,calc(100% - 24px));bottom:calc(var(--tabs-h) + env(safe-area-inset-bottom,0px) + 10px);display:none;align-items:center;gap:4px;padding:6px 8px;border-radius:16px;background:var(--ink);color:var(--bg);box-shadow:0 8px 28px rgba(0,0,0,.3)}
+#bar.show{display:flex}
+#bar .cnt{flex:1;padding-left:8px;font-size:14px;opacity:.8}
+#bar button{min-height:44px;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:inherit;font-weight:600;font-size:15px}
+#toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);z-index:40;transform:translate(-50%,-20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:600;font-size:15px;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"><main id="view"></main></div>
+<div id="bar" role="toolbar" aria-label="Ações do versículo"></div>
+<nav id="tabs" aria-label="Navegação principal"><div class="in"></div></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript>Ative o JavaScript para usar a Bíblia Viva em Cristo.</noscript>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Dados ---------- */
+// [nome, capítulos, nome em inglês para a API]
+var BOOKS=[
+["Gênesis",50,"genesis"],["Êxodo",40,"exodus"],["Levítico",27,"leviticus"],["Números",36,"numbers"],["Deuteronômio",34,"deuteronomy"],
+["Josué",24,"joshua"],["Juízes",21,"judges"],["Rute",4,"ruth"],["1 Samuel",31,"1 samuel"],["2 Samuel",24,"2 samuel"],
+["1 Reis",22,"1 kings"],["2 Reis",25,"2 kings"],["1 Crônicas",29,"1 chronicles"],["2 Crônicas",36,"2 chronicles"],
+["Esdras",10,"ezra"],["Neemias",13,"nehemiah"],["Ester",10,"esther"],["Jó",42,"job"],["Salmos",150,"psalms"],
+["Provérbios",31,"proverbs"],["Eclesiastes",12,"ecclesiastes"],["Cantares",8,"song of solomon"],["Isaías",66,"isaiah"],
+["Jeremias",52,"jeremiah"],["Lamentações",5,"lamentations"],["Ezequiel",48,"ezekiel"],["Daniel",12,"daniel"],
+["Oseias",14,"hosea"],["Joel",3,"joel"],["Amós",9,"amos"],["Obadias",1,"obadiah"],["Jonas",4,"jonah"],
+["Miqueias",7,"micah"],["Naum",3,"nahum"],["Habacuque",3,"habakkuk"],["Sofonias",3,"zephaniah"],["Ageu",2,"haggai"],
+["Zacarias",14,"zechariah"],["Malaquias",4,"malachi"],
+["Mateus",28,"matthew"],["Marcos",16,"mark"],["Lucas",24,"luke"],["João",21,"john"],["Atos",28,"acts"],
+["Romanos",16,"romans"],["1 Coríntios",16,"1 corinthians"],["2 Coríntios",13,"2 corinthians"],["Gálatas",6,"galatians"],
+["Efésios",6,"ephesians"],["Filipenses",4,"philippians"],["Colossenses",4,"colossians"],
+["1 Tessalonicenses",5,"1 thessalonians"],["2 Tessalonicenses",3,"2 thessalonians"],["1 Timóteo",6,"1 timothy"],
+["2 Timóteo",4,"2 timothy"],["Tito",3,"titus"],["Filemom",1,"philemon"],["Hebreus",13,"hebrews"],["Tiago",5,"james"],
+["1 Pedro",5,"1 peter"],["2 Pedro",3,"2 peter"],["1 João",5,"1 john"],["2 João",1,"2 john"],["3 João",1,"3 john"],
+["Judas",1,"jude"],["Apocalipse",22,"revelation"]
+];
+
+// Versículos do dia (Almeida Corrigida Fiel, domínio público) — confira antes de divulgar.
+var VOD=[
+{b:"João",c:3,nums:[16],t:"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."},
+{b:"Salmos",c:23,nums:[1],t:"O Senhor é o meu pastor, nada me faltará."},
+{b:"Filipenses",c:4,nums:[13],t:"Posso todas as coisas em Cristo que me fortalece."},
+{b:"Isaías",c:41,nums:[10],t:"Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus; eu te fortaleço, e te ajudo, e te sustento com a destra da minha justiça."},
+{b:"Josué",c:1,nums:[9],t:"Não to mandei eu? Esforça-te, e tem bom ânimo; não temas, nem te espantes, porque o Senhor teu Deus é contigo, por onde quer que andares."},
+{b:"Mateus",c:11,nums:[28],t:"Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei."},
+{b:"Romanos",c:8,nums:[28],t:"E sabemos que todas as coisas contribuem juntamente para o bem daqueles que amam a Deus, daqueles que são chamados segundo o seu propósito."},
+{b:"Jeremias",c:29,nums:[11],t:"Porque eu bem sei os pensamentos que penso de vós, diz o Senhor; pensamentos de paz, e não de mal, para vos dar o fim que esperais."},
+{b:"Salmos",c:46,nums:[1],t:"Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia."},
+{b:"Salmos",c:121,nums:[1,2],t:"Elevo os meus olhos para os montes, de onde vem o meu socorro. O meu socorro vem do Senhor, que fez os céus e a terra."},
+{b:"Provérbios",c:3,nums:[5,6],t:"Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas."},
+{b:"1 Coríntios",c:13,nums:[13],t:"Agora, pois, permanecem a fé, a esperança e o amor, estes três, mas o maior destes é o amor."},
+{b:"Mateus",c:6,nums:[33],t:"Mas, buscai primeiro o Reino de Deus, e a sua justiça, e todas estas coisas vos serão acrescentadas."},
+{b:"Salmos",c:37,nums:[5],t:"Entrega o teu caminho ao Senhor; confia nele, e ele o fará."},
+{b:"2 Timóteo",c:1,nums:[7],t:"Porque Deus não nos deu o espírito de temor, mas de fortaleza, e de amor, e de moderação."}
+];
+
+// Capítulo disponível mesmo sem internet
+var OFFLINE={"Salmos 23":[
+"O Senhor é o meu pastor, nada me faltará.",
+"Deitar-me faz em verdes pastos, guia-me mansamente a águas tranquilas.",
+"Refrigera a minha alma; guia-me pelas veredas da justiça, por amor do seu nome.",
+"Ainda que eu andasse pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.",
+"Preparas uma mesa perante mim na presença dos meus inimigos, unges com óleo a minha cabeça, o meu cálice transborda.",
+"Certamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias."
+]};
+
+/* ---------- Utilidades ---------- */
+var store={
+  get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+function h(tag,props){
+  var e=document.createElement(tag);
+  if(props){for(var k in props){var v=props[k];
+    if(k==='class')e.className=v;
+    else if(k==='html')e.innerHTML=v;
+    else if(k.indexOf('on')===0)e.addEventListener(k.slice(2),v);
+    else if(v!==false&&v!=null)e.setAttribute(k,v);}}
+  for(var i=2;i<arguments.length;i++){
+    var kids=[].concat(arguments[i]);
+    for(var j=0;j<kids.length;j++){var kd=kids[j];
+      if(kd==null||kd===false)continue;
+      e.append(kd.nodeType?kd:document.createTextNode(kd));}
+  }
+  return e;
+}
+function ico(p){return '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';}
+function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();}
+function bookIndex(name){for(var i=0;i<BOOKS.length;i++)if(BOOKS[i][0]===name)return i;return 0;}
+function refText(name,c,nums){
+  var n=nums.slice().sort(function(a,b){return a-b;}),parts=[],s=n[0],p=n[0];
+  for(var i=1;i<=n.length;i++){
+    if(n[i]===p+1){p=n[i];continue;}
+    parts.push(s===p?String(s):s+'-'+p);s=n[i];p=n[i];
+  }
+  return name+' '+c+':'+parts.join(', ');
+}
+function dayOfYear(){var d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);}
+function greeting(){var hr=new Date().getHours();return hr<12?'Bom dia':hr<18?'Boa tarde':'Boa noite';}
+function openUrl(u){var a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();}
+var toastTimer;
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},2200);}
+function copyText(t){
+  function fallback(){
+    var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');toast('Copiado');}catch(e){toast('Não foi possível copiar');}
+    ta.remove();
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Copiado');},fallback);}
+  else fallback();
+}
+function shareText(t,ref){return '“'+t+'”\n— '+ref+'\n\nViva em Cristo';}
+function shareWA(text){openUrl('https://wa.me/?text='+encodeURIComponent(text));}
+
+/* ---------- Estado ---------- */
+var prefs=store.get('prefs',{fs:22,theme:'auto'});
+if(typeof prefs.fs!=='number'||prefs.fs<18||prefs.fs>32)prefs.fs=22;
+if(['auto','light','dark'].indexOf(prefs.theme)<0)prefs.theme='auto';
+var favs=store.get('favs',[]);
+if(!Array.isArray(favs))favs=[];
+var S={tab:'home',screen:'home',b:0,c:1,hl:null,testament:0,q:''};
+var selection=new Set(),curVerses=new Map(),readToken=0;
+var SCREEN_TAB={home:'home',books:'bible',chapters:'bible',read:'bible',favs:'favs',settings:'settings'};
+
+function applyPrefs(){
+  var r=document.documentElement;
+  r.style.setProperty('--fs',prefs.fs+'px');
+  if(prefs.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',prefs.theme);
+}
+function savePrefs(){store.set('prefs',prefs);}
+function favId(b,c,nums){return b+':'+c+':'+nums.slice().sort(function(a,b){return a-b;}).join(',');}
+function isFav(id){return favs.some(function(f){return f.id===id;});}
+function favVerses(b,c){
+  var set=new Set();
+  favs.forEach(function(f){if(f.b===b&&f.c===c)f.nums.forEach(function(n){set.add(n);});});
+  return set;
+}
+function toggleFav(it){
+  var id=favId(it.b,it.c,it.nums),i=favs.findIndex(function(f){return f.id===id;});
+  if(i>=0){favs.splice(i,1);toast('Removido dos favoritos');}
+  else{favs.unshift({id:id,b:it.b,c:it.c,nums:it.nums.slice().sort(function(a,b){return a-b;}),t:it.t});toast('Salvo nos favoritos');}
+  store.set('favs',favs);
+}
+
+/* ---------- Navegação ---------- */
+function go(screen,patch){
+  S.screen=screen;Object.assign(S,patch||{});S.tab=SCREEN_TAB[screen];
+  selection.clear();render();window.scrollTo(0,0);
+}
+function render(){
+  var map={home:renderHome,books:renderBooks,chapters:renderChapters,read:renderRead,favs:renderFavs,settings:renderSettings};
+  map[S.screen]();
+  document.querySelectorAll('.tab').forEach(function(b){
+    var on=b.dataset.id===S.tab;b.classList.toggle('on',on);
+    if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+  });
+  updateBar();
+}
+function buildTabs(){
+  var defs=[
+    ['home','Início',ico('<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>'),function(){go('home');}],
+    ['bible','Bíblia',ico('<path d="M12 6c-2-1.5-5-2-8-2v14c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2z"/><path d="M12 6v14"/>'),function(){go('books');}],
+    ['favs','Favoritos',ico('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'),function(){go('favs');}],
+    ['settings','Ajustes',ico('<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>'),function(){go('settings');}]
+  ];
+  var box=document.querySelector('#tabs .in');
+  defs.forEach(function(d){
+    box.append(h('button',{class:'tab','data-id':d[0],onclick:d[3]},h('span',{html:d[2]}),h('span',null,d[1])));
+  });
+}
+
+/* ---------- Componentes ---------- */
+function seg(opts,cur,onPick){
+  var wrap=h('div',{class:'seg',role:'group'});
+  wrap.style.gridTemplateColumns='repeat('+opts.length+',1fr)';
+  opts.forEach(function(o){
+    var b=h('button',{class:'seg-b'+(o[0]===cur?' on':''),'aria-pressed':String(o[0]===cur),onclick:function(){
+      wrap.querySelectorAll('.seg-b').forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false');});
+      b.classList.add('on');b.setAttribute('aria-pressed','true');onPick(o[0]);
+    }},o[1]);
+    wrap.append(b);
+  });
+  return wrap;
+}
+function backBtn(fn){return h('button',{class:'icon-btn','aria-label':'Voltar',onclick:fn,html:'‹'});}
+
+/* ---------- Início ---------- */
+function renderHome(){
+  var v=VOD[dayOfYear()%VOD.length],bi=bookIndex(v.b),ref=refText(v.b,v.c,v.nums),id=favId(bi,v.c,v.nums);
+  var favBtn=h('button',{class:'btn ghost'},isFav(id)?'Salvo':'Favoritar');
+  favBtn.addEventListener('click',function(){toggleFav({b:bi,c:v.c,nums:v.nums,t:v.t});favBtn.textContent=isFav(id)?'Salvo':'Favoritar';});
+  var hero=h('section',{class:'hero'},
+    h('p',{class:'kicker'},greeting()+'. Este é o versículo do dia.'),
+    h('blockquote',null,v.t),
+    h('p',{class:'ref'},ref),
+    h('div',{class:'actions'},
+      h('button',{class:'btn gold',onclick:function(){go('read',{b:bi,c:v.c,hl:v.nums});}},'Ler o capítulo'),
+      h('button',{class:'btn ghost',onclick:function(){shareWA(shareText(v.t,ref));}},'Enviar no WhatsApp'),
+      favBtn));
+  var last=store.get('last',null),cont;
+  if(last&&BOOKS[last.b]&&last.c>=1&&last.c<=BOOKS[last.b][1]){
+    cont=h('button',{class:'row-card',onclick:function(){go('read',{b:last.b,c:last.c,hl:null});}},
+      h('span',{class:'lbl'},'Continuar lendo'),h('span',{class:'big'},BOOKS[last.b][0]+' '+last.c));
+  }else{
+    cont=h('button',{class:'row-card',onclick:function(){go('read',{b:bookIndex('João'),c:1,hl:null});}},
+      h('span',{class:'lbl'},'Comece por aqui'),h('span',{class:'big'},'João 1'));
+  }
+  var chips=h('div',{class:'chips'});
+  ['Salmos','Provérbios','João','Romanos','Mateus','Gênesis'].forEach(function(n){
+    chips.append(h('button',{class:'chip',onclick:function(){go('chapters',{b:bookIndex(n)});}},n));
+  });
+  view().replaceChildren(
+    h('div',{class:'brand'},h('span',{html:ico('<path d="M12 3v18M6.5 9h11"/>')}),h('span',null,'Viva em Cristo')),
+    hero,cont,h('h2',null,'Livros para começar'),chips,
+    h('button',{class:'btn wide',onclick:shareApp},'Compartilhar este app no WhatsApp'));
+}
+function shareApp(){
+  shareWA('Leia a Bíblia de graça no app do canal Viva em Cristo:\n'+location.href);
+}
+function view(){return document.getElementById('view');}
+
+/* ---------- Livros e busca ---------- */
+function parseQuery(q){
+  var n=norm(q),m=n.match(/^(.*?)\s*(\d+)\s*(?:[:.,]\s*(\d+))?$/);
+  if(m)return {book:m[1].trim(),c:parseInt(m[2],10),v:m[3]?parseInt(m[3],10):null};
+  return {book:n,c:null,v:null};
+}
+function findBooks(s){
+  var out=[];for(var i=0;i<BOOKS.length;i++)if(norm(BOOKS[i][0]).indexOf(s)>=0)out.push(i);return out;
+}
+function pickBest(ms,s){
+  var i,ex=ms.filter(function(i){return norm(BOOKS[i][0])===s;});if(ex.length)return ex[0];
+  var st=ms.filter(function(i){return norm(BOOKS[i][0]).indexOf(s)===0;});if(st.length)return st[0];
+  return ms[0];
+}
+function bookRow(i){
+  return h('button',{class:'book',onclick:function(){go('chapters',{b:i});}},
+    h('span',null,BOOKS[i][0]),h('span',{class:'n'},BOOKS[i][1]+(BOOKS[i][1]===1?' capítulo':' capítulos')));
+}
+function openFromQuery(){
+  var p=parseQuery(S.q);if(!p.book)return;
+  var ms=findBooks(p.book);if(!ms.length)return;
+  var i=pickBest(ms,p.book);
+  if(p.c&&p.c>=1&&p.c<=BOOKS[i][1])go('read',{b:i,c:p.c,hl:p.v?[p.v]:null});
+  else if(!p.c)go('chapters',{b:i});
+}
+function renderBooks(){
+  var list=h('div',{id:'list'});
+  var segEl=seg([[0,'Antigo Testamento'],[1,'Novo Testamento']],S.testament,function(v){S.testament=v;drawList();});
+  function drawList(){
+    var q=S.q.trim();segEl.hidden=!!q;list.replaceChildren();
+    if(!q){
+      BOOKS.forEach(function(bk,i){if((i>=39?1:0)===S.testament)list.append(bookRow(i));});
+      return;
+    }
+    var p=parseQuery(q);
+    if(!p.book){list.append(h('p',{class:'state'},'Digite o nome do livro antes do número. Exemplo: João 3:16.'));return;}
+    var ms=findBooks(p.book);
+    if(!ms.length){list.append(h('p',{class:'state'},'Nenhum livro encontrado. Tente “Salmos” ou “João 3:16”.'));return;}
+    if(p.c){
+      var i=pickBest(ms,p.book),tot=BOOKS[i][1];
+      if(p.c>=1&&p.c<=tot){
+        var label=BOOKS[i][0]+' '+p.c+(p.v?':'+p.v:'');
+        list.append(h('button',{class:'book',onclick:function(){go('read',{b:i,c:p.c,hl:p.v?[p.v]:null});}},h('span',null,'Abrir '+label),h('span',{class:'n'},'ler agora')));
+      }else{
+        list.append(h('p',{class:'state'},BOOKS[i][0]+' tem '+tot+(tot===1?' capítulo.':' capítulos.')));
+      }
+    }else{
+      ms.forEach(function(i){list.append(bookRow(i));});
+    }
+  }
+  var input=h('input',{class:'search',type:'search',placeholder:'Buscar livro ou versículo (ex.: João 3:16)','aria-label':'Buscar livro ou versículo',autocomplete:'off',autocapitalize:'none',enterkeyhint:'go',value:S.q,
+    oninput:function(e){S.q=e.target.value;drawList();},
+    onkeydown:function(e){if(e.key==='Enter')openFromQuery();}});
+  view().replaceChildren(h('div',{class:'topbar'},h('div',{class:'grow'},h('h1',null,'Bíblia'))),input,segEl,list);
+  drawList();
+}
+
+/* ---------- Capítulos ---------- */
+function renderChapters(){
+  var bk=BOOKS[S.b],grid=h('div',{class:'grid'});
+  for(var c=1;c<=bk[1];c++)(function(c){
+    grid.append(h('button',{onclick:function(){go('read',{c:c,hl:null});},'aria-label':'Capítulo '+c},String(c)));
+  })(c);
+  view().replaceChildren(
+    h('div',{class:'topbar'},backBtn(function(){go('books');}),h('div',{class:'grow'},h('h1',null,bk[0]))),
+    h('p',{class:'muted'},'Escolha um capítulo. '+bk[1]+(bk[1]===1?' disponível.':' disponíveis.')),grid);
+}
+
+/* ---------- Leitura ---------- */
+function loadChapter(b,c){
+  var key=BOOKS[b][0]+' '+c;
+  if(OFFLINE[key])return Promise.resolve(OFFLINE[key].map(function(t,i){return {n:i+1,t:t};}));
+  var cached=store.get('cap:'+b+':'+c,null);
+  if(cached&&cached.length)return Promise.resolve(cached);
+  var ctrl=typeof AbortController!=='undefined'?new AbortController():null;
+  var timer=setTimeout(function(){if(ctrl)ctrl.abort();},12000);
+  return fetch('https://bible-api.com/'+encodeURIComponent(BOOKS[b][2]+' '+c)+'?translation=almeida',ctrl?{signal:ctrl.signal}:undefined)
+    .then(function(r){clearTimeout(timer);if(!r.ok)throw new Error('http '+r.status);return r.json();})
+    .then(function(j){
+      var vs=(j.verses||[]).map(function(v){return {n:v.verse,t:String(v.text).replace(/\s+/g,' ').trim()};});
+      if(!vs.length)throw new Error('vazio');
+      store.set('cap:'+b+':'+c,vs);return vs;
+    });
+}
+function step(d){
+  var b=S.b,c=S.c+d;
+  if(c<1){if(b===0)return;b--;c=BOOKS[b][1];}
+  else if(c>BOOKS[b][1]){if(b===BOOKS.length-1)return;b++;c=1;}
+  go('read',{b:b,c:c,hl:null});
+}
+function chFs(d){
+  prefs.fs=Math.max(18,Math.min(32,prefs.fs+d));applyPrefs();savePrefs();
+}
+function renderRead(){
+  var token=++readToken,bk=BOOKS[S.b];curVerses=new Map();
+  var body=h('div',{class:'verses'},h('p',{class:'state'},'Carregando o capítulo…'));
+  var prev=h('button',{class:'btn',onclick:function(){step(-1);}},'‹ Anterior');
+  var next=h('button',{class:'btn',onclick:function(){step(1);}},'Próximo ›');
+  if(S.b===0&&S.c===1)prev.disabled=true;
+  if(S.b===BOOKS.length-1&&S.c===bk[1])next.disabled=true;
+  view().replaceChildren(
+    h('div',{class:'topbar'},
+      backBtn(function(){go('chapters',{b:S.b});}),
+      h('div',{class:'grow'},h('h1',null,h('button',{class:'title-btn','aria-label':'Escolher outro capítulo',onclick:function(){go('chapters',{b:S.b});}},bk[0]+' '+S.c))),
+      h('button',{class:'icon-btn sm','aria-label':'Diminuir letra',onclick:function(){chFs(-2);}},'A−'),
+      h('button',{class:'icon-btn sm','aria-label':'Aumentar letra',onclick:function(){chFs(2);}},'A+')),
+    h('p',{class:'muted small'},'Tradução Almeida. Toque em um versículo para favoritar ou compartilhar.'),
+    body,h('div',{class:'pager'},prev,next));
+  loadChapter(S.b,S.c).then(function(verses){
+    if(token!==readToken)return;
+    var favSet=favVerses(S.b,S.c);body.replaceChildren();
+    verses.forEach(function(v){
+      curVerses.set(v.n,v.t);
+      var cls='v'+(favSet.has(v.n)?' fav':'')+(S.hl&&S.hl.indexOf(v.n)>=0?' hl':'');
+      var p=h('p',{class:cls,'data-n':v.n,role:'button',tabindex:'0','aria-pressed':'false'},h('sup',null,String(v.n)),v.t);
+      p.addEventListener('click',function(){toggleSel(v.n,p);});
+      p.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSel(v.n,p);}});
+      body.append(p);
+    });
+    store.set('last',{b:S.b,c:S.c});
+    if(S.hl){var el=body.querySelector('[data-n="'+S.hl[0]+'"]');if(el)el.scrollIntoView({block:'center'});}
+  }).catch(function(){
+    if(token!==readToken)return;
+    body.replaceChildren(
+      h('p',{class:'state'},'Não foi possível carregar este capítulo. Confira sua conexão com a internet e tente de novo.'),
+      h('button',{class:'btn',onclick:function(){renderRead();}},'Tentar de novo'));
+  });
+}
+function toggleSel(n,el){
+  if(selection.has(n)){selection.delete(n);el.classList.remove('sel');el.setAttribute('aria-pressed','false');}
+  else{selection.add(n);el.classList.add('sel');el.setAttribute('aria-pressed','true');}
+  updateBar();
+}
+function selData(){
+  var nums=Array.from(selection).sort(function(a,b){return a-b;});
+  return {nums:nums,t:nums.map(function(n){return curVerses.get(n);}).join(' '),ref:refText(BOOKS[S.b][0],S.c,nums)};
+}
+function clearSel(){
+  selection.clear();
+  document.querySelectorAll('.v.sel').forEach(function(e){e.classList.remove('sel');e.setAttribute('aria-pressed','false');});
+  updateBar();
+}
+function markFavs(){
+  var set=favVerses(S.b,S.c);
+  document.querySelectorAll('.v').forEach(function(e){e.classList.toggle('fav',set.has(parseInt(e.dataset.n,10)));});
+}
+var barEls={};
+function buildBar(){
+  var bar=document.getElementById('bar');
+  barEls.cnt=h('span',{class:'cnt'},'');
+  barEls.fav=h('button',{onclick:function(){var d=selData();toggleFav({b:S.b,c:S.c,nums:d.nums,t:d.t});markFavs();clearSel();}},'Favoritar');
+  barEls.wa=h('button',{onclick:function(){var d=selData();shareWA(shareText(d.t,d.ref));}},'WhatsApp');
+  barEls.copy=h('button',{onclick:function(){var d=selData();copyText(shareText(d.t,d.ref));}},'Copiar');
+  barEls.x=h('button',{'aria-label':'Limpar seleção',onclick:clearSel},'✕');
+  bar.append(barEls.cnt,barEls.fav,barEls.wa,barEls.copy,barEls.x);
+}
+function updateBar(){
+  var bar=document.getElementById('bar'),n=selection.size;
+  bar.classList.toggle('show',n>0&&S.screen==='read');
+  if(!n)return;
+  var d=selData();
+  barEls.cnt.textContent=n+(n===1?' versículo':' versículos');
+  barEls.fav.textContent=isFav(favId(S.b,S.c,d.nums))?'Remover':'Favoritar';
+}
+
+/* ---------- Favoritos ---------- */
+function renderFavs(){
+  var wrap=h('div');
+  if(!favs.length){
+    wrap.append(h('p',{class:'state'},'Nenhum favorito ainda. Na leitura, toque em um versículo e escolha Favoritar.'),
+      h('button',{class:'btn',onclick:function(){go('books');}},'Abrir a Bíblia'));
+  }
+  favs.forEach(function(f){
+    var name=BOOKS[f.b][0],ref=refText(name,f.c,f.nums);
+    wrap.append(h('article',{class:'fav-item'},
+      h('p',null,f.t),h('div',{class:'r'},ref),
+      h('div',{class:'actions'},
+        h('button',{class:'btn',onclick:function(){go('read',{b:f.b,c:f.c,hl:f.nums});}},'Ler'),
+        h('button',{class:'btn',onclick:function(){shareWA(shareText(f.t,ref));}},'WhatsApp'),
+        h('button',{class:'btn',onclick:function(){toggleFav(f);renderFavs();}},'Remover'))));
+  });
+  view().replaceChildren(h('div',{class:'topbar'},h('div',{class:'grow'},h('h1',null,'Favoritos'))),wrap);
+}
+
+/* ---------- Ajustes ---------- */
+function renderSettings(){
+  var preview=h('p',{class:'preview'},'O Senhor é o meu pastor, nada me faltará.');
+  preview.style.fontSize=prefs.fs+'px';
+  var range=h('input',{type:'range',min:'18',max:'32',step:'2',value:String(prefs.fs),'aria-label':'Tamanho da letra',
+    oninput:function(e){prefs.fs=parseInt(e.target.value,10);applyPrefs();savePrefs();preview.style.fontSize=prefs.fs+'px';}});
+  view().replaceChildren(
+    h('div',{class:'topbar'},h('div',{class:'grow'},h('h1',null,'Ajustes'))),
+    h('section',{class:'panel'},h('h2',null,'Aparência'),
+      seg([['auto','Automático'],['light','Claro'],['dark','Escuro']],prefs.theme,function(v){prefs.theme=v;applyPrefs();savePrefs();})),
+    h('section',{class:'panel'},h('h2',null,'Tamanho da letra'),range,preview),
+    h('section',{class:'panel'},h('h2',null,'Divulgue o app'),
+      h('p',{class:'muted small'},'Envie o link para quem ainda não conhece o canal Viva em Cristo.'),
+      h('button',{class:'btn wide',onclick:shareApp},'Compartilhar no WhatsApp')),
+    h('section',{class:'panel'},h('h2',null,'Sobre'),
+      h('p',{class:'muted small'},'Bíblia Viva em Cristo. Gratuita, sem anúncios. Texto na tradução Almeida, em domínio público. Seus favoritos ficam salvos neste aparelho.')));
+}
+
+/* ---------- Início ---------- */
+applyPrefs();buildTabs();buildBar();go('home');
+})();
+</script>
+</body>
+</html>
